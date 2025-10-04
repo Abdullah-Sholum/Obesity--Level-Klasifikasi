@@ -2,3 +2,5 @@ urutan klasifikasi.
 1. menampilkan informasi dataset, ringkasan dataset,  *file tahap-1_obesity_level.ipynb*
    -baseline 1.1 (statistik, korelasi dan visualisasi hubungan faktor)
    -baseline 1.2 model decision tree. *file tahap-2_obesity_level.ipynb*
+2. upgrade ke model random forest. *file sepertinya masih otw.
+3. buat insight dari model. *file sepertinya masih otw.
