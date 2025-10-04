@@ -1,0 +1,65 @@
+dataset obesity level berisi data luas  mengenai individu, berisi atribut mengenai informasi utama seperti
+gender, tinggi, berat, history keluarga yang overweight,  pola diet, aktivitas fisik, mode transportasi dan level obesitas koresponden.
+
+tagar dari dataset ini.
+-gender
+-umur-
+-tinggi
+-berat
+-history keluarga yang overweight
+-FAVC (Frequent consumption of high caloric food). frekuensi konsumsi makanan tinggi kalori
+-FCVC (Frequency of consumtion of vegetables). frekuensi konsumsi sayuran.
+-NCP (Number of main meals). jumlah makanan utama.
+-CAEC (Consumption of food between meals). konsumsi makanan diantara waktu makan.
+-ROKOK.
+-CH20 (Daily water consumption). konsumsi air harian.
+-SCC (Caloric beverages consumption). konsumsi minuman berkalori.
+-FAF (Physical activity frequency). frekuensi aktivitas fisik.-
+-TUE (Time spent using technology devices). waktu dihabiskan menggunakan perangkat teknologi.
+-CALC (Consumption of alcohol). konsumsi alkohol.
+-MTRANS (Mode of transportaion). mode transportasi
+-Obe1dad (Target variable representing obesity levels). level obesitas (target variabel yang merepresentasikan level obesitas).
+
+kemudian data external BMI
+-BMI (Body Mass Index). indeks massa tubuh, dihitung dari berat (kg) dibagi tinggi (m) kuadrat.
+
+#code
+df.describe()
+berisi
+-count: jumlah total data pada kolom tersebut.  NaN tidak akan dihitung.
+-mean: rata-rata nilai pada kolom tersebut.
+-std: mengukur sebaran data dari rata-rata. Semakin besar std, semakin bervariasi data. semakin kecil std, semakin dekat data ke rata-rata.
+-min: nilai minimum pada kolom tersebut.
+-25%: batas 25% data terendah (Q1), kuartil pertama.
+-50%: batas 50% data (Q2), kuartil kedua, juga merupakan median.
+-75%: batas 75% data (Q3), kuartil ketiga.
+-max: nilai maksimum pada kolom tersebut.
+
+dt = DecisionTreeClassifier(random_state=42)
+dt.fit(X_train, y_train)
+berisi
+| Parameter                    | Penjelasan                                                                                                                                                                                                 | Nilai Default |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| **criterion**                | Metode untuk mengukur kualitas pemisahan (split). Umumnya ada dua:  <br> - `'gini'` → menggunakan **Gini Impurity**.  <br> - `'entropy'` → menggunakan **Information Gain** (berdasarkan entropi).         | `'gini'`      |
+| **splitter**                 | Strategi pemilihan split di setiap node.  <br> - `'best'` → memilih split terbaik berdasarkan skor tertinggi.  <br> - `'random'` → memilih split secara acak (berguna untuk variasi atau ensemble).        | `'best'`      |
+| **max_depth**                | Kedalaman maksimum dari pohon.  <br> Jika `None`, pohon akan terus membelah hingga semua node murni (pure) atau tidak bisa dipecah lagi.  <br> Semakin besar kedalaman → risiko **overfitting** meningkat. | `None`        |
+| **min_samples_split**        | Jumlah minimum sampel yang dibutuhkan untuk membagi satu node.  <br> Misal `2` artinya node akan dibelah jika memiliki ≥ 2 sampel.  <br> Nilai besar → pohon lebih dangkal.                                | `2`           |
+| **min_samples_leaf**         | Jumlah minimum sampel yang harus ada pada **setiap daun (leaf)**.  <br> Nilai besar membuat model lebih “halus” dan menghindari daun kecil yang bisa menyebabkan overfitting.                              | `1`           |
+| **min_weight_fraction_leaf** | Sama seperti `min_samples_leaf`, tetapi menggunakan **fraksi bobot total sampel** (berguna jika data memiliki bobot).                                                                                      | `0.0`         |
+| **max_features**             | Jumlah fitur yang digunakan saat mencari split terbaik.  <br> - `None` → gunakan semua fitur.  <br> - `'sqrt'` → akar jumlah fitur (default pada RandomForest).  <br> - `'log2'` → log2 jumlah fitur.      | `None`        |
+| **random_state**             | Nilai acak untuk menjaga **konsistensi hasil** antara pelatihan ulang.  <br> Dengan `random_state=42`, setiap kali dijalankan hasilnya akan sama.                                                          | `None`        |
+| **max_leaf_nodes**           | Membatasi jumlah **daun (leaf)** maksimum pada pohon.  <br> Jika diatur, model akan membuat pohon paling optimal dengan jumlah daun ≤ nilai ini.                                                           | `None`        |
+| **min_impurity_decrease**    | Node akan dibelah hanya jika pengurangan impurity (ketidakmurnian) ≥ nilai ini.  <br> Berguna untuk menghindari split yang tidak signifikan.                                                               | `0.0`         |
+| **class_weight**             | Menentukan bobot kelas (berguna untuk data tidak seimbang).  <br> Bisa `None`, `'balanced'`, atau dictionary manual.                                                                                       | `None`        |
+| **ccp_alpha**                | Parameter **pruning** menggunakan **cost-complexity pruning**.  <br> Semakin besar nilainya, semakin banyak node kecil yang dihapus.                                                                       | `0.0`         |
+| **monotonic_cst**            | (Mulai versi baru sklearn) digunakan untuk **konstraint monotonik**, yaitu memaksa hubungan fitur dan target berjalan dalam arah tertentu.                                                                 | `None`        |
+
+#output akurasi.
+| Kolom         | Arti                                                                                                                     | Rumus / Penjelasan                                |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| **precision** | Ketepatan prediksi positif. Dari semua prediksi yang dikatakan “kelas ini”, berapa banyak yang benar?                    | `TP / (TP + FP)`                                  |
+| **recall**    | Kemampuan menangkap semua data benar dari kelas itu. Dari semua data “kelas ini”, berapa banyak yang berhasil ditemukan? | `TP / (TP + FN)`                                  |
+| **f1-score**  | Rata-rata harmonik dari precision & recall. Menggabungkan keduanya agar seimbang.                                        | `2 * (precision * recall) / (precision + recall)` |
+| **support**   | Jumlah data aktual (true label) dari kelas tersebut di dataset pengujian.                                                | —                                                 |
+
+#confussion matrix
